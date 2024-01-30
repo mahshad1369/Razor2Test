@@ -39,17 +39,20 @@ namespace Razor2Test.Pages.Products
             else
             {
                 newProduct = product;
-                Comments = new List<Comment>();
-                Questions = new List<Question>();
                 return Page();
             }
         }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
 
-            //if (ModelState.IsValid)
-           // {
+            var product = Store.Products.FirstOrDefault(x => x.Id == Id);
+           
+                newProduct = product;
+                Comments = new List<Comment>();
+                Questions = new List<Question>();
+                //if (ModelState.IsValid)
+                // {
                 var comment=new Comment()
                 {
                     Text = Request.Form["commentText"],
@@ -58,6 +61,7 @@ namespace Razor2Test.Pages.Products
             
                 Comments.Add(comment);
                 comment.ProductId = Id;
+            return Page();
                 //return RedirectToPage("./SeeMore", new { id = newProduct.Id });
             //}
         }
