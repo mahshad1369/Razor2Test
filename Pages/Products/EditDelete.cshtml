@@ -1,0 +1,60 @@
+﻿@page
+@model Razor2Test.Pages.Products.EditDeleteModel
+@{
+    ViewData["Title"] = "Edit Product";
+}
+<h3>@ViewData["Title"]</h3>
+
+<form method="post" >
+
+    <input type="hidden" asp-for="newProduct.Id" />
+    <div>
+        <label asp-for="newProduct.Title">Product Name</label>
+        <input asp-for="newProduct.Title" class="form-control" />
+        <span class="text-danger" asp-validation-for="newProduct.Title"></span>
+
+    </div>
+    <br />
+    <div>
+        <img src="@Model.newProduct.PhotoPath" id="photoPreview" />
+        <input type="hidden" asp-for="newProduct.PhotoPath" id="photoPreview2" />
+        <input type="file" id="FileInput" />
+
+    </div>
+    <div>
+        <label asp-for="newProduct.ShortDescription">Short Description</label>
+        <input asp-for="newProduct.ShortDescription" class="form-control" />
+        <span class="text-danger" asp-validation-for="newProduct.ShortDescription"></span>
+    </div>
+    <br />
+    <div>
+        <label asp-for="newProduct.LongDescription">Long Description</label>
+        <textarea asp-for="newProduct.LongDescription" class="form-control"></textarea>
+        <span class="text-danger" asp-validation-for="newProduct.LongDescription"></span>
+        <br />
+    </div>
+    <br />
+
+    <br />
+    <button class="btn btn-success" type="submit">Save</button>
+    <a class="btn btn-danger" asp-page="./Index">Cancel</a>
+</form>
+
+    @section Scripts
+    {
+        <script>
+            const fileInput = document.querySelector('#FileInput');
+
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    $('#photoPreview')[0].src = reader.result
+                    $('#photoPreview2').val(reader.result)
+                };
+                reader.readAsDataURL(file);
+            });
+        </script>
+    }
+

@@ -1,0 +1,66 @@
+﻿@page
+@model Razor2Test.Pages.Products.ProductDetailsModel
+@{
+    
+}
+
+<h3>@Model.Product.Title</h3>
+
+<br />
+<div>
+    <label >@Model.Product.ShortDescription</label>
+</div>
+<br />
+<div>
+    <label >@Model.Product.LongDescription</label>
+</div>
+<div>
+    <img src="@Model.Product.PhotoPath" id="photoPreview" />
+</div>
+
+
+<hr />
+<h1>ویژگی ها </h1>
+
+
+<h1>سوالات </h1>
+<hr />
+<ul>
+    @foreach (var question in Model.Product.Questions)
+    {
+        <p>
+            @question.QuestionText
+        </p>
+        <p>
+            <p>Created on: @question.CreationDate.ToString("MM/dd/yyyy")</p>
+        </p>
+        <p>
+            <div class="input-group mb-3">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon1">ارسال</button>
+                <input type="text" class="form-control" placeholder="پاسخ" aria-label="Example text with button addon" aria-describedby="button-addon1">
+            </div>
+        </p>
+
+        <hr />
+    }
+
+<h1>نظرات </h1>
+<hr />
+<ul>
+    @foreach (var comment in Model.Product.Comments)
+    {
+        <p>
+            @comment.Id
+        </p>
+        <li>
+            @comment.Text
+        </li>
+        <p>
+            <p>Created on: @comment.CreationDate.ToString("MM/dd/yyyy")</p>
+        </p>
+
+        <hr />
+    }
+    
+</ul>
+
