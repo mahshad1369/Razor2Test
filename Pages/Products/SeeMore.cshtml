@@ -30,8 +30,9 @@ else
     foreach (var item in Model.Comments)
     {
         <ul>
-            <p>Anonymous</p>
-            <li>@item.Text - @item.CreationDate</li>
+            <li>
+                <p>Anonymous :
+            @item.Text - @item.CreationDate</p></li>
         </ul>
     }
 }
