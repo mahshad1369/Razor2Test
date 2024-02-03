@@ -12,12 +12,10 @@ namespace Razor2Test.Models
         public string? LongDescription { get; set; }
         public List<Comment>? Comments { get; set; }
         public List<Question>? Questions { get; set; }
-        public DateTime CreationDate { get; set; } 
-
-        public Product()
-        {
-            CreationDate = DateTime.Now;
-        }
+        public DateTime CreationDate { get; set; } = DateTime.Now;
+        
+        public int CategoryId {  get; set; }
+        public Category Category { get; set; }
 
     }
 

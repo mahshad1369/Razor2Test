@@ -1,21 +1,52 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Razor2Test.Models;
+using System.Xml.Linq;
 
 namespace Razor2Test.Pages.Products
 {
     public class ProductDetailsModel : PageModel
     {
+        [BindProperty(SupportsGet = true)]
+        public int Id { get; set; }
+
+        [BindProperty(SupportsGet =false)]
+        public Question Question{ get; set; }
+
+        [BindProperty(SupportsGet =false)]
+        public Comment Comment{ get; set; }
+
+        [BindProperty(SupportsGet = false)]
         public Product Product{ get; set; }
        
-    public IActionResult OnGet(int id)
+        public IActionResult OnGet(int id)
         {
-            if (id <= 4) 
+            var newProduct = Store.Products.FirstOrDefault(x => x.Id == id);
+
+            if (newProduct == null)
             {
-                Product = Store.Products.FirstOrDefault(x => x.Id == id);
+                return NotFound();
+            }
+            else
+            {
+                Product = newProduct;
                 return Page();
             }
-            return RedirectToPage("./SeeMore", new { id = id });
+        }
+
+        public IActionResult OnPost()
+        {
+
+            var newProduct = Store.Products.FirstOrDefault(x => x.Id == Id);
+           
+            if (newProduct.Comments is null)
+                newProduct.Comments = new();
+            newProduct.Comments.Add(Comment);
+
+            if (newProduct.Questions is null)
+                newProduct.Questions = new();
+            newProduct.Questions.Add(Question);
+            return RedirectToPage("/Products/ProductDetails", new { id = Id });
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿@page
 @model Razor2Test.Pages.Products.SeeMoreModel
 @{
-    ViewData["Title"] = "SeeMore";
+    
 }
 
 <h3>@Model.newProduct.Title</h3>
@@ -38,11 +38,10 @@ else
 }
 
 <hr />
-<h4>Add New Comment Here...</h4>
 <form method="post">
     <div class="form-group">
         <input type="hidden" asp-for="newProduct.Id" />
-        <textarea asp-for="newProduct.Comments" name="commentText"  class="form-control"></textarea>
+        <textarea asp-for="newProduct.Comments" name="commentText" class="form-control"></textarea>
         <span class="text-danger" asp-validation-for="comment.Text"></span>
         <br />
     </div>

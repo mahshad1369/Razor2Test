@@ -1,0 +1,43 @@
+﻿@page
+@model Razor2Test.Pages.Categories.IndexModel
+@{
+}
+
+<a class="btn btn-primary" asp-page="/categories/Add">+</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">
+                Id
+            </th>
+            <th scope="col">
+                Title
+            </th>
+            <th scope="col">
+                Photo
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Categories)
+        {
+            <tr scope="row">
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    <img src="@item.PhotoPath" class="card-img-top" alt="..." style="width: 5rem;">
+                </td>
+                <td>
+                    <a class="btn btn-outline-primary" asp-page="/Pages/Show/ShowProWithCategoryId">Product Details</a>
+                    <input type="hidden" asp-for="@item.Id"/>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -7,31 +7,63 @@
 <h3>@ViewData["Title"]</h3>
 
 <form method="post" enctype="multipart/form-data">
+
+
     <div>
-        <label asp-for="newProduct.Title">Product Name</label>
-        <input asp-for="newProduct.Title" class="form-control" />
-        <span class="text-danger" asp-validation-for="newProduct.Title"></span>
+        <label asp-for="CreateProductViewModel.Title">Product Name</label>
+        <input asp-for="CreateProductViewModel.Title" class="form-control" />
+        <span class="text-danger" asp-validation-for="CreateProductViewModel.Title"></span>
 
     </div>
     <br />
     <div>
-        <label asp-for="newProduct.ShortDescription">Short Description</label>
-        <input asp-for="newProduct.ShortDescription" class="form-control" />
-        <span class="text-danger" asp-validation-for="newProduct.ShortDescription"></span>
+        <label asp-for="CreateProductViewModel.ShortDescription">Short Description</label>
+        <input asp-for="CreateProductViewModel.ShortDescription" class="form-control" />
+        <span class="text-danger" asp-validation-for="CreateProductViewModel.ShortDescription"></span>
 
     </div>
     <br />
     <div>
-        <label asp-for="newProduct.LongDescription">Long Description</label>
-        <textarea asp-for="newProduct.LongDescription" class="form-control"></textarea>
-        <span class="text-danger" asp-validation-for="newProduct.LongDescription"></span>
+        <label asp-for="CreateProductViewModel.LongDescription">Long Description</label>
+        <textarea asp-for="CreateProductViewModel.LongDescription" class="form-control"></textarea>
+        <span class="text-danger" asp-validation-for="CreateProductViewModel.LongDescription"></span>
         <br />
     </div>
-   
-   
-    
+
+    <div>
+        <img src="@Model.CreateProductViewModel.PhotoPath" id="photoPreview" />
+        <input type="hidden" asp-for="CreateProductViewModel.PhotoPath" id="photoPreview2" />
+        <input type="file" id="FileInput" />
+
+    </div>
+    <br />
+
+
+    <select asp-for="CategoryId" asp-items="Model.Categories"></select>
+
+
+    <br />
+
     <button class="btn btn-success" type="submit">Submit</button>
 </form>
+@section Scripts
+{
+    <script>
+        const fileInput = document.querySelector('#FileInput');
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                $('#photoPreview')[0].src = reader.result
+                $('#photoPreview2').val(reader.result)
+            };
+            reader.readAsDataURL(file);
+        });
+    </script>
+}
+
 
 
 

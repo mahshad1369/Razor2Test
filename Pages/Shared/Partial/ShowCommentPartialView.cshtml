@@ -1,0 +1,15 @@
+﻿@using Razor2Test.Models
+@model List<Comment>?
+
+@if (Model is not null)
+{
+    <div>
+        <h4>Comments:</h4>
+        <ul>
+            @foreach (var comment in Model)
+            {
+                <li>@comment.Text</li>
+            }
+        </ul>
+    </div>
+}

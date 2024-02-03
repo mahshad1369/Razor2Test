@@ -1,8 +1,9 @@
 ﻿@page
 @model Razor2Test.Pages.Products.ProductDetailsModel
 @{
-    
+    ViewData["Title"] = "Product Details";
 }
+@* <partial name="~/Pages/Shared/Partial/ShowCommentPartialView.cshtml" model="@Model.newProduct.Comments" /> *@
 
 <h3>@Model.Product.Title</h3>
 
@@ -17,50 +18,58 @@
 <div>
     <img src="@Model.Product.PhotoPath" id="photoPreview" />
 </div>
-
-
 <hr />
-<h1>ویژگی ها </h1>
-
-
-<h1>سوالات </h1>
-<hr />
-<ul>
-    @foreach (var question in Model.Product.Questions)
-    {
-        <p>
-            @question.QuestionText
-        </p>
-        <p>
-            <p>Created on: @question.CreationDate.ToString("MM/dd/yyyy")</p>
-        </p>
-        <p>
-            <div class="input-group mb-3">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon1">ارسال</button>
-                <input type="text" class="form-control" placeholder="پاسخ" aria-label="Example text with button addon" aria-describedby="button-addon1">
-            </div>
-        </p>
-
-        <hr />
-    }
 
 <h1>نظرات </h1>
+
+@if (Model.Product.Comments is not null)
+{
+    <div>
+        <ul>
+            @foreach (var comment in Model.Product.Comments)
+            {
+                <li>@comment.Text</li>
+            }
+        </ul>
+    </div>
+}
 <hr />
-<ul>
-    @foreach (var comment in Model.Product.Comments)
-    {
-        <p>
-            @comment.Id
-        </p>
-        <li>
-            @comment.Text
-        </li>
-        <p>
-            <p>Created on: @comment.CreationDate.ToString("MM/dd/yyyy")</p>
-        </p>
+<h1>سوالات </h1>
+@if(Model.Product.Questions is not null)
+{
+    <div>
+        <ul>
+            @foreach(var item in Model.Product.Questions)
+            {
+                <li>@item.Text</li>
+            }
+            
+        </ul>
+    </div>
+}
 
-        <hr />
-    }
-    
-</ul>
+<hr />
+    <h4>Add New Comment Here...</h4>
 
+    <form method="post">
+        <div class="form-group">
+            <input type="hidden" asp-for="Product.Id" />
+            <textarea asp-for="Comment.Text" class="form-control"></textarea>
+            <span class="text-danger" asp-validation-for="Comment.Text"></span>
+            <input type="hidden" asp-for="Comment.ProductId" value="@Model.Id"/>
+            <br />
+        </div>
+        <button class="btn btn-success" type="submit">Send Comment</button>
+    </form>
+    <hr />
+    <h4>Add Your Question Here...</h4>
+    <form method="post">
+        <div class="form-group">
+            <input type="hidden" asp-for="Product.Id" />
+            <textarea asp-for="Question.Text" class="form-control" ></textarea>
+            <span class="text-danger" asp-validation-for="Question.Text"></span>
+            <input type="hidden" asp-for="Question.ProductId" value="@Model.Id"/>
+            <br />
+        </div>
+        <button class="btn btn-success" type="submit">Send Question</button> 
+    </form>
