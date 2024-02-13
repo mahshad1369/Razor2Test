@@ -18,6 +18,8 @@
                 Photo
             </th>
             <th></th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -34,8 +36,14 @@
                     <img src="@item.PhotoPath" class="card-img-top" alt="..." style="width: 5rem;">
                 </td>
                 <td>
-                    <a class="btn btn-outline-primary" asp-page="/Pages/Show/ShowProWithCategoryId">Product Details</a>
-                    <input type="hidden" asp-for="@item.Id"/>
+                    <a class="btn btn-outline-primary" asp-page="/Products/Show/ShowById" asp-route-id="@item.Id">Products</a>
+                    <input type="hidden" asp-for="@item.Id" />
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-page="/Categories/Edit" asp-route-id="@item.Id">Edit</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-page-handler="Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
         }

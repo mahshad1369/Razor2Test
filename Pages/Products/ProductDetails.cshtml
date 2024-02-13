@@ -9,11 +9,11 @@
 
 <br />
 <div>
-    <label >@Model.Product.ShortDescription</label>
+    <label>@Model.Product.ShortDescription</label>
 </div>
 <br />
 <div>
-    <label >@Model.Product.LongDescription</label>
+    <label>@Model.Product.LongDescription</label>
 </div>
 <div>
     <img src="@Model.Product.PhotoPath" id="photoPreview" />
@@ -35,41 +35,41 @@
 }
 <hr />
 <h1>سوالات </h1>
-@if(Model.Product.Questions is not null)
+@if (Model.Product.Questions is not null)
 {
     <div>
         <ul>
-            @foreach(var item in Model.Product.Questions)
+            @foreach (var item in Model.Product.Questions)
             {
                 <li>@item.Text</li>
             }
-            
+
         </ul>
     </div>
 }
 
 <hr />
-    <h4>Add New Comment Here...</h4>
+<h4>Add New Comment Here...</h4>
 
-    <form method="post">
-        <div class="form-group">
-            <input type="hidden" asp-for="Product.Id" />
-            <textarea asp-for="Comment.Text" class="form-control"></textarea>
-            <span class="text-danger" asp-validation-for="Comment.Text"></span>
-            <input type="hidden" asp-for="Comment.ProductId" value="@Model.Id"/>
-            <br />
-        </div>
-        <button class="btn btn-success" type="submit">Send Comment</button>
-    </form>
-    <hr />
-    <h4>Add Your Question Here...</h4>
-    <form method="post">
-        <div class="form-group">
-            <input type="hidden" asp-for="Product.Id" />
-            <textarea asp-for="Question.Text" class="form-control" ></textarea>
-            <span class="text-danger" asp-validation-for="Question.Text"></span>
-            <input type="hidden" asp-for="Question.ProductId" value="@Model.Id"/>
-            <br />
-        </div>
-        <button class="btn btn-success" type="submit">Send Question</button> 
-    </form>
+<form method="post">
+    <div class="form-group">
+        <input type="hidden" asp-for="Product.Id" />
+        <textarea asp-for="Comment.Text" class="form-control"></textarea>
+        <span class="text-danger" asp-validation-for="Comment.Text"></span>
+        <input type="hidden" asp-for="Comment.ProductId" value="@Model.Id" />
+        <br />
+    </div>
+    <button class="btn btn-success" type="submit">Send Comment</button>
+</form>
+<hr />
+<h4>Add Your Question Here...</h4>
+<form method="post">
+    <div class="form-group">
+        <input type="hidden" asp-for="Product.Id" />
+        <textarea asp-for="Question.Text" class="form-control"></textarea>
+        <span class="text-danger" asp-validation-for="Question.Text"></span>
+        <input type="hidden" asp-for="Question.ProductId" value="@Model.Id" />
+        <br />
+    </div>
+    <button class="btn btn-success" type="submit">Send Question</button>
+</form>

@@ -7,29 +7,36 @@ namespace Razor2Test.Pages.Products
 {
     public class ProductDetailsModel : PageModel
     {
+        private readonly IProductRepository productRepository;
+
         [BindProperty(SupportsGet = true)]
         public int Id { get; set; }
 
-        [BindProperty(SupportsGet =false)]
-        public Question Question{ get; set; }
-
-        [BindProperty(SupportsGet =false)]
-        public Comment Comment{ get; set; }
+        [BindProperty(SupportsGet = false)]
+        public Question Question { get; set; }
 
         [BindProperty(SupportsGet = false)]
-        public Product Product{ get; set; }
-       
-        public IActionResult OnGet(int id)
-        {
-            var newProduct = Store.Products.FirstOrDefault(x => x.Id == id);
+        public Comment Comment { get; set; }
 
-            if (newProduct == null)
+        [BindProperty(SupportsGet = false)]
+        public Product Product { get; set; }
+
+        public ProductDetailsModel(IProductRepository productRepository)
+        {
+            this.productRepository = productRepository;
+        }
+
+        public IActionResult OnGet()
+        {
+            var product = productRepository.Get(Id);
+
+            if (product is null)
             {
                 return NotFound();
             }
             else
             {
-                Product = newProduct;
+                Product = product;
                 return Page();
             }
         }
@@ -37,8 +44,8 @@ namespace Razor2Test.Pages.Products
         public IActionResult OnPost()
         {
 
-            var newProduct = Store.Products.FirstOrDefault(x => x.Id == Id);
-           
+            var newProduct = productRepository.Get(Id);
+
             if (newProduct.Comments is null)
                 newProduct.Comments = new();
             newProduct.Comments.Add(Comment);

@@ -1,7 +1,8 @@
 ﻿@page
-@model Razor2Test.Pages.Categories.AddModel
+@model Razor2Test.Pages.Categories.EditModel
 @{
-    ViewData["Title"] = "AddNewCategory";
+
+    ViewData["Title"] = "EditCategory";
 }
 
 <h3>@ViewData["Title"]</h3>
@@ -14,7 +15,6 @@
     </div>
     <div>
         <img src="@Model.Category.PhotoPath" id="photoPreview" />
-        <br />
         <input type="hidden" asp-for="Category.PhotoPath" id="photoPreview2" />
         <input type="file" id="FileInput" />
 
@@ -23,7 +23,7 @@
     <button class="btn btn-success" type="submit">Add</button>
 </form>
 @section Scripts
-  {
+{
     <script>
         const fileInput = document.querySelector('#FileInput');
 
@@ -38,4 +38,4 @@
             reader.readAsDataURL(file);
         });
     </script>
-  }
+}

@@ -6,22 +6,28 @@ namespace Razor2Test.Pages.Categories;
 
 public class IndexModel : PageModel
 {
-    
+    private readonly ICategoryRepository categoryRepository;
+
     public List<Category> Categories { get; set; }
-    public void OnGet()
+    public IndexModel(ICategoryRepository categoryRepository)
     {
-        Categories = Store.Categories;
+        this.categoryRepository = categoryRepository;
     }
 
-    public IActionResult OnPostDelete(int id)
+    public void OnGet()
     {
-        var category = Store.Categories.FirstOrDefault(x => x.Id == id);
+        Categories = categoryRepository.GetAllCategories().ToList();
+    }
+
+    public IActionResult OnGetDelete(int id)
+    {
+        var category = categoryRepository.Get(id);
 
         if (category is null)
         {
             return NotFound();
         }
-        Store.Categories.Remove(category);
-        return Page();
+        categoryRepository.Delete(id);
+        return RedirectToPage("./Index");
     }
 }

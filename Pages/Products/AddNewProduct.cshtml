@@ -10,29 +10,29 @@
 
 
     <div>
-        <label asp-for="CreateProductViewModel.Title">Product Name</label>
-        <input asp-for="CreateProductViewModel.Title" class="form-control" />
-        <span class="text-danger" asp-validation-for="CreateProductViewModel.Title"></span>
+        <label asp-for="ProductViewModel.Title">Product Name</label>
+        <input asp-for="ProductViewModel.Title" class="form-control" />
+        <span class="text-danger" asp-validation-for="ProductViewModel.Title"></span>
 
     </div>
     <br />
     <div>
-        <label asp-for="CreateProductViewModel.ShortDescription">Short Description</label>
-        <input asp-for="CreateProductViewModel.ShortDescription" class="form-control" />
-        <span class="text-danger" asp-validation-for="CreateProductViewModel.ShortDescription"></span>
+        <label asp-for="ProductViewModel.ShortDescription">Short Description</label>
+        <input asp-for="ProductViewModel.ShortDescription" class="form-control" />
+        <span class="text-danger" asp-validation-for="ProductViewModel.ShortDescription"></span>
 
     </div>
     <br />
     <div>
-        <label asp-for="CreateProductViewModel.LongDescription">Long Description</label>
-        <textarea asp-for="CreateProductViewModel.LongDescription" class="form-control"></textarea>
-        <span class="text-danger" asp-validation-for="CreateProductViewModel.LongDescription"></span>
+        <label asp-for="ProductViewModel.LongDescription">Long Description</label>
+        <textarea asp-for="ProductViewModel.LongDescription" class="form-control"></textarea>
+        <span class="text-danger" asp-validation-for="ProductViewModel.LongDescription"></span>
         <br />
     </div>
 
     <div>
-        <img src="@Model.CreateProductViewModel.PhotoPath" id="photoPreview" />
-        <input type="hidden" asp-for="CreateProductViewModel.PhotoPath" id="photoPreview2" />
+        <img src="@Model.ProductViewModel.PhotoPath" id="photoPreview" />
+        <input type="hidden" asp-for="ProductViewModel.PhotoPath" id="photoPreview2" />
         <input type="file" id="FileInput" />
 
     </div>
@@ -40,7 +40,7 @@
 
 
     <select asp-for="CategoryId" asp-items="Model.Categories"></select>
-
+    <br />
 
     <br />
 

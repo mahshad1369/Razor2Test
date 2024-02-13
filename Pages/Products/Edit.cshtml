@@ -1,11 +1,11 @@
 ﻿@page
-@model Razor2Test.Pages.Products.EditDeleteModel
+@model Razor2Test.Pages.Products.EditModel
 @{
     ViewData["Title"] = "Edit Product";
 }
 <h3>@ViewData["Title"]</h3>
 
-<form method="post" asp-page="/Products/EditDelete">
+<form method="post" asp-page="/Products/Edit">
 
     <input type="hidden" asp-for="newProduct.Id" />
     <div>
@@ -33,7 +33,7 @@
         <span class="text-danger" asp-validation-for="newProduct.LongDescription"></span>
         <br />
     </div>
-        <select asp-for="newProduct.CategoryId" asp-items="Model.Categories"></select>
+    <select asp-for="newProduct.CategoryId" asp-items="Model.Categories"></select>
     <br />
     <br />
 
@@ -42,20 +42,21 @@
 </form>
 
 @section Scripts
-    {
-            <script>
-                const fileInput = document.querySelector('#FileInput');
+{
+    <script>
+        const fileInput = document.querySelector('#FileInput');
 
-                fileInput.addEventListener('change', (e) => {
-                    const file = e.target.files[0];
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
 
-                    const reader = new FileReader();
-                    reader.onloadend = () => {
-                        $('#photoPreview')[0].src = reader.result
-                        $('#photoPreview2').val(reader.result)
-                    };
-                    reader.readAsDataURL(file);
-                });
-            </script>
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                $('#photoPreview')[0].src = reader.result
+                $('#photoPreview2').val(reader.result)
+            };
+            reader.readAsDataURL(file);
+        });
+    </script>
 }
+
 

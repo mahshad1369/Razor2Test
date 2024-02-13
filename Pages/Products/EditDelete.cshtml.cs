@@ -1,45 +1,71 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Razor2Test.Models;
 
 namespace Razor2Test.Pages.Products
 {
     public class EditDeleteModel : PageModel
     {
-        [BindProperty(SupportsGet = false)]
-        public Product newProduct { get; set; } 
+        private readonly IProductRepository productRepository;
+        private readonly ICategoryRepository categoryRepository;
 
-        [BindProperty(SupportsGet =true)]
-        public int Id { get; set; }
+        public List<SelectListItem> Categories { get; set; }
 
-        public IActionResult OnGet()
+        [BindProperty]
+        public Product newProduct { get; set; }
+
+        //[BindProperty(SupportsGet = true)]
+        //public int Id { get; set; }
+
+        //[BindProperty(SupportsGet = false)]
+        //public int CategoryId { get; set; }
+
+        public EditDeleteModel(IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
-            var product = Store.Products.FirstOrDefault(x => x.Id == Id);
-            if (product == null)
+            this.productRepository = productRepository;
+            this.categoryRepository = categoryRepository;
+        }
+
+        public IActionResult OnGet(int Id)
+        {
+            Categories = new();
+
+            newProduct = productRepository.Get(Id);
+
+            if (newProduct is null)
             {
                 return NotFound();
             }
-            newProduct = product;
+
+            Categories.AddRange(categoryRepository.GetAllCategories().Select(x => new SelectListItem()
+            {
+                Text = x.Title,
+                Value = x.Id.ToString(),
+                Selected = x.Id == newProduct.CategoryId
+            }).ToList());
+
+
+
             return Page();
         }
 
         public IActionResult OnPost()
         {
-            var products=Store.Products.ToList();
-            var product = products.FirstOrDefault(x => x.Id == Id);
-            if (product == null)
+            var checkProductExist = productRepository.ExistProduct(newProduct.Id);
+
+            if (checkProductExist is false)
             {
                 return NotFound();
             }
 
-            product.Title= newProduct.Title;
-            product.ShortDescription= newProduct.ShortDescription;
-            product.LongDescription= newProduct.LongDescription;
+            productRepository.Update(newProduct);
+
             return RedirectToPage("./Index");
         }
 
-        
-       
+
+
 
     }
 }

@@ -10,30 +10,39 @@ namespace Razor2Test.Pages.Products;
 public class AddNewProductModel : PageModel
 {
     [BindProperty(SupportsGet = false)]
-    public CreateProductViewModel CreateProductViewModel { get; set; }
+    public ProductViewModel ProductViewModel { get; set; }
 
     public List<Product> newProducts1 = new List<Product>();
+
+
+    private readonly IProductRepository productRepository;
+    private readonly ICategoryRepository categoryRepository;
 
     public List<SelectListItem> Categories { get; set; }
 
     [BindProperty(SupportsGet = false)]
     public int CategoryId { get; set; }
 
+
+    public AddNewProductModel(IProductRepository productRepository, ICategoryRepository categoryRepository)
+    {
+        //ctrl + .
+        ProductViewModel = new();
+        this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
+    }
+
     public void OnGet()
     {
         Categories = new();
-        Categories.AddRange(Store.Categories.Select(x => new SelectListItem()
+
+        Categories.AddRange(categoryRepository.GetAllCategories().Select(x => new SelectListItem()
         {
             Text = x.Title,
             Value = x.Id.ToString()
         }).ToList());
 
     }
-    public AddNewProductModel()
-    {
-        CreateProductViewModel = new();
-    }
-
 
     public IActionResult OnPost()
     {
@@ -42,12 +51,16 @@ public class AddNewProductModel : PageModel
             return Page();
         }
 
+        #region AppService
+
         var product = new Product();
-        Helper.Map(CreateProductViewModel, product);
-        product.Id = Store.Products.Count + 1;
+        Helper.Map(ProductViewModel, product);
         product.CategoryId = CategoryId;
 
-        Store.Products.Add(product);
+        productRepository.Add(product);
+
+        #endregion
+
         return RedirectToPage("./Index");
     }
 

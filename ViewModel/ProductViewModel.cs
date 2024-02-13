@@ -1,7 +1,8 @@
 ﻿namespace Razor2Test.ViewModel;
 
-public class CreateProductViewModel
+public class ProductViewModel
 {
+    public int Id { get; set; }
     public string Title { get; set; }
     public string? PhotoPath { get; set; }
 
