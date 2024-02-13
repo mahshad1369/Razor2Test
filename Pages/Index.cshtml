@@ -4,7 +4,16 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Go to the <a asp-page="/Products/Index">SHOP</a></p>
+<div class="row justify-content-center">
+    @foreach (var category in Model.HomeViewModel.CategoriesViewModel)
+    {
+        <div class="col-2 text-center">
+            <img src="@(category.PhotoPath ?? "")" style="height: 100px;width: 100px;border-radius: 50%;" />
+            <a asp-page="/Products/Show/ShowById" asp-route-id="@category.Id" class="text-decoration-none d-block">@category.Title</a>
+        </div>
+    }
+
 </div>
+
+<hr />
+

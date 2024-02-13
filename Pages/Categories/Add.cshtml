@@ -1,0 +1,41 @@
+﻿@page
+@model Razor2Test.Pages.Categories.AddModel
+@{
+    ViewData["Title"] = "AddNewCategory";
+}
+
+<h3>@ViewData["Title"]</h3>
+
+<form method="post">
+    <div>
+        <label asp-for="Category.Title">Title</label>
+        <input asp-for="Category.Title" class="form-control" />
+        <span class="text-danger" asp-validation-for="Category.Title"></span>
+    </div>
+    <div>
+        <img src="@Model.Category.PhotoPath" id="photoPreview" />
+        <br />
+        <input type="hidden" asp-for="Category.PhotoPath" id="photoPreview2" />
+        <input type="file" id="FileInput" />
+
+    </div>
+    <br />
+    <button class="btn btn-success" type="submit">Add</button>
+</form>
+@section Scripts
+  {
+    <script>
+        const fileInput = document.querySelector('#FileInput');
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                $('#photoPreview')[0].src = reader.result
+                $('#photoPreview2').val(reader.result)
+            };
+            reader.readAsDataURL(file);
+        });
+    </script>
+  }

@@ -3,13 +3,8 @@
     public class Question
     {
         public int Id { get; set; }
-        public string? QuestionText { get; set; }
-        public DateTime CreationDate { get; set; } 
-
-
-        public Question()
-        {
-            CreationDate = DateTime.Now;
-        }
+        public string Text { get; set; }
+        public DateTime CreationDate { get; set; }= DateTime.Now;
+        public int ProductId { get; set; }
     }
 }

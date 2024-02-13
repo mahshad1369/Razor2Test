@@ -1,21 +1,59 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Razor2Test.Models;
+using System.Xml.Linq;
 
 namespace Razor2Test.Pages.Products
 {
     public class ProductDetailsModel : PageModel
     {
-        public Product Product{ get; set; }
-       
-    public IActionResult OnGet(int id)
+        private readonly IProductRepository productRepository;
+
+        [BindProperty(SupportsGet = true)]
+        public int Id { get; set; }
+
+        [BindProperty(SupportsGet = false)]
+        public Question Question { get; set; }
+
+        [BindProperty(SupportsGet = false)]
+        public Comment Comment { get; set; }
+
+        [BindProperty(SupportsGet = false)]
+        public Product Product { get; set; }
+
+        public ProductDetailsModel(IProductRepository productRepository)
         {
-            if (id <= 4) 
+            this.productRepository = productRepository;
+        }
+
+        public IActionResult OnGet()
+        {
+            var product = productRepository.Get(Id);
+
+            if (product is null)
             {
-                Product = Store.Products.FirstOrDefault(x => x.Id == id);
+                return NotFound();
+            }
+            else
+            {
+                Product = product;
                 return Page();
             }
-            return RedirectToPage("./SeeMore", new { id = id });
+        }
+
+        public IActionResult OnPost()
+        {
+
+            var newProduct = productRepository.Get(Id);
+
+            if (newProduct.Comments is null)
+                newProduct.Comments = new();
+            newProduct.Comments.Add(Comment);
+
+            if (newProduct.Questions is null)
+                newProduct.Questions = new();
+            newProduct.Questions.Add(Question);
+            return RedirectToPage("/Products/ProductDetails", new { id = Id });
         }
     }
 }
