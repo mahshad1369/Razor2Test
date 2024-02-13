@@ -2,6 +2,7 @@
 {
     public interface IProductRepository
     {
+
         /// <summary>
         /// if exist return true
         /// </summary>
