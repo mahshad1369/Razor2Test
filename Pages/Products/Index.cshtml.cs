@@ -11,7 +11,10 @@ namespace Razor2Test.Pages.Products
         private readonly IProductRepository productRepository;
 
         public int PageIndex { get; set; }
-        public int TotalPages { get; set; }
+        //public int TotalPages { get; set; }
+        public PaginationModel<List<Product>> paginationModels { get; set; }
+
+
 
 
         public string NameSort { get; set; }
@@ -32,6 +35,8 @@ namespace Razor2Test.Pages.Products
         {
             Products2 = productRepository.GetAllProduct().ToList();
             List<Product> products = new();
+
+            
 
             //products = productRepository.GetAllProduct().ApplyPagination(1, 10).Items.ToList();
 

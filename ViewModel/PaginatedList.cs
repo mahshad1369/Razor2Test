@@ -57,7 +57,7 @@ namespace Razor2Test.ViewModel
         /// <param name="pageSize">تعداد ایتم هایی که باید در یک صفحه اورده شود</param>
         /// <returns></returns>
         // اکستنشن متد
-        public static PaginationModel<T> ApplyPagination<T>(this IEnumerable<T> listInput, int pageIndex, int pageSize)
+        public static PaginationModel<T> ApplyPagination<T>(this IEnumerable<T> listInput, int pageIndex, int pageSize) // where T : class
         {
             // دیتابیس چندتا ایتم داره
             var listCount = listInput.Count();
@@ -74,6 +74,7 @@ namespace Razor2Test.ViewModel
 
             return result;
         }
+
     }
 
     public class PaginationModel<TList>
